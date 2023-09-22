@@ -542,7 +542,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"DatasetNFT.sol": "DatasetNFT"
+			"ModelNFT.sol": "DatasetNFT"
 		},
 		"evmVersion": "paris",
 		"libraries": {},
@@ -692,12 +692,12 @@
 				"dweb:/ipfs/QmcEW85JRzvDkQggxiBBLVAasXWdkhEysqypj9EaB6H2g6"
 			]
 		},
-		"DatasetNFT.sol": {
-			"keccak256": "0x49a4ccf5e9a9ee61bf8f871ba4ad6e4b50b862da5e81916e1cbca2335a4a6c36",
+		"ModelNFT.sol": {
+			"keccak256": "0x156fd10f472d2ca98fb9a575eb13ca4e961ca8e8a9a7b720b924d06c9a3cbe5e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d23e58672d6d0397b3f608dcaabe3cdc3a970034c60aad1b3925c34d9c833281",
-				"dweb:/ipfs/QmfSaC7tejAsQoFy4FtSfyFJmj5WvA35uV1NBHd3ASYxuH"
+				"bzz-raw://effd4bba38dba619236aef112a19387babbb6f927f59c5a5dffd66ba616847f0",
+				"dweb:/ipfs/QmaEXqt9iUUe5duoE4neBaRv4BX22ErbaLfRcU4iGM8xBn"
 			]
 		}
 	},
