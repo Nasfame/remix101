@@ -1,0 +1,97 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_jobId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_errorMsg",
+						"type": "string"
+					}
+				],
+				"name": "lilypadCancelled",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_jobId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum LilypadResultType",
+						"name": "_resultType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "_result",
+						"type": "string"
+					}
+				],
+				"name": "lilypadFulfilled",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"bacalhau-project/lilypad-v0/hardhat/contracts/LilypadCallerInterface.sol": "LilypadCallerInterface"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"bacalhau-project/lilypad-v0/hardhat/contracts/LilypadCallerInterface.sol": {
+			"keccak256": "0xefe47114c1d3ccbfd0fc08576ac86597617c733b1394df51b849a0553b275964",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://e8df1844f56b6b7f8c98e948d35a31d5b5a31bd128e64e8d4e6a55079bf4c807",
+				"dweb:/ipfs/QmTnDyMEMB9qT6zSbb7N1ao1oUKUmcGZsqFDCWgcZgCpdv"
+			]
+		}
+	},
+	"version": 1
+}
