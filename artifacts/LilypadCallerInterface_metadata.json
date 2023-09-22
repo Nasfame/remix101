@@ -1,0 +1,97 @@
+{
+	"compiler": {
+		"version": "0.8.18+commit.87f61d96"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_jobId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_errorMsg",
+						"type": "string"
+					}
+				],
+				"name": "lilypadCancelled",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_jobId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum LilypadResultType",
+						"name": "_resultType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "string",
+						"name": "_result",
+						"type": "string"
+					}
+				],
+				"name": "lilypadFulfilled",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"lilyInterface.sol": "LilypadCallerInterface"
+		},
+		"evmVersion": "paris",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"lilyInterface.sol": {
+			"keccak256": "0x3fa84b6b05d16f59d188649b117f3fa963a0de16c9490658b96942830a010645",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4ba9ba14be50b66fa2f2547bca33cb33c16f8da3d6d335ada4eb3bf9b242f3dc",
+				"dweb:/ipfs/QmWgpYbkf1q4nrD9H62vXszbUhS65qz9pF7dcGQpBWJWn5"
+			]
+		}
+	},
+	"version": 1
+}
