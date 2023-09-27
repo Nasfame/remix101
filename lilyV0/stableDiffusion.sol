@@ -8,7 +8,9 @@ contract StableDiffusionContract is LilypadCallerInterface {
   address public bridgeAddress; // Variable for interacting with the deployed LilypadEvents contract
   LilypadEventsUpgradeable bridge;
   uint256 public lilypadFee; //=30000000000000000;
-  mapping (uint=>string) public prompts;
+  mapping (uint256=>string) public prompts;
+
+  uint[] public promptArr;
 
   struct SuccessStatus {
     address _from;
@@ -65,6 +67,7 @@ contract StableDiffusionContract is LilypadCallerInterface {
       uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
       //require(id > 0, "job didn't return a value");
       prompts[id] = _prompt;
+      promptArr.push(id);
   }
 
   /** LilypadCaller Interface Implementation */
