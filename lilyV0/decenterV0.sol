@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.4;
-import "https://github.com/bacalhau-project/lilypad/blob/main/hardhat/contracts/LilypadEventsUpgradeable.sol";
-import "https://github.com/bacalhau-project/lilypad/blob/main/hardhat/contracts/LilypadCallerInterface.sol";
+import "./LilypadEventsUpgradeable.sol";
+import "./LilypadCallerInterface.sol";
 
 /** === User Contract Example === **/
 contract MyContract is LilypadCallerInterface {
