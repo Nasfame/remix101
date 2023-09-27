@@ -7,7 +7,7 @@ interface ModicumContract {
 
 // Payment is 2 lilETH for all jobs currently
 // got to testnet.lilypadnetwork.org to fund your wallet
-contract ExampleClient {
+contract LilypadV2ExampleClient {
   address public _contractAddress;
   ModicumContract remoteContractInstance;
 
