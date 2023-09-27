@@ -16,7 +16,7 @@ contract LilypadEventsUpgradeable is Initializable, AccessControlUpgradeable, UU
     bool private initialized;
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     
-    uint256 public LILYPAD_FEE = 0.03 * 10**18;
+    uint256 public LILYPAD_FEE =4 ether;
     uint256 private escrowAmount = 0;
     uint256 private escrowMinAutoPay  = 5 * 10**18;
     address private escrowAddress = 0x5617493b265E9d3CC65CE55eAB7798796D9108E4; 
