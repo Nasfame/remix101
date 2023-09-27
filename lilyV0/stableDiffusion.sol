@@ -105,4 +105,9 @@ contract StableDiffusionContract is LilypadCallerInterface {
    function getErrorStatus(address _owner)external view returns(ErrorStatus[] memory){
       return errorRecord[_owner];
   }
+
+  // Function to get all elements in the array
+  function getAllPrompts() public view returns (uint[] memory) {
+      return promptArr;
+  }
 }
