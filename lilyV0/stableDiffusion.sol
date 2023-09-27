@@ -53,6 +53,11 @@ contract StableDiffusionContract is LilypadCallerInterface {
   /** Call the runLilypadJob() to generate a stable diffusion image from a text prompt*/
   function StableDiffusion(string calldata _prompt) external payable {
       require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
+      uint256 refundAmount = msg.value - lilypadFee;
+      if (refundAmount > 0) {
+         payable(msg.sender).transfer(refundAmount);
+      }
+
       // TODO: spec -> do proper json encoding, look out for quotes in _prompt
       string memory spec = string.concat(specStart, _prompt, specEnd);
       uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
