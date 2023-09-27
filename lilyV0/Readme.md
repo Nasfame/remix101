@@ -9,3 +9,14 @@ Faucet: https://faucet.calibration.fildev.network
 Blockchain Explorer: https://calibration.filscan.io/
 
 ChainID: 314159 (0x4cb2f)
+
+
+## Deployed Contracts
+
+Lilypad Events Contract: 0x6a75Ad25ee5cE2456447537F99067f03Aa12086d
+
+
+
+Stable Diffusion.sol : 0xB72F64218A6e6bd95B8B51a6733D87B6794Cb420
+
+Value: 30000000000000000 WEI

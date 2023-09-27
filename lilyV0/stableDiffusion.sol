@@ -4,7 +4,7 @@ import "./LilypadEventsUpgradeable.sol";
 import "./LilypadCallerInterface.sol";
 
 /** === User Contract Example === **/
-contract MyContract is LilypadCallerInterface {
+contract StableDiffusionContract is LilypadCallerInterface {
   address public bridgeAddress; // Variable for interacting with the deployed LilypadEvents contract
   LilypadEventsUpgradeable bridge;
   uint256 public lilypadFee; //=30000000000000000;
