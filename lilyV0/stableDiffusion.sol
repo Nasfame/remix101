@@ -106,8 +106,28 @@ contract StableDiffusionContract is LilypadCallerInterface {
       return errorRecord[_owner];
   }
 
-  // Function to get all elements in the array
+  // Function to get all prompts
   function getAllPrompts() public view returns (uint[] memory) {
       return promptArr;
   }
+
+  // Function to get all prompts (keys and values) from the mapping
+  function getAllPromptKeysValues() public view returns (uint256[] memory, string[] memory) {
+      uint256[] memory keys = new uint256[](prompts.length);
+      string[] memory values = new string[](prompts.length);
+
+      // Iterate over the mapping to populate keys and values arrays
+      uint256 index = 0;
+      for (uint256 key = 0; key < prompts.length; key++) {
+          keys[index] = key;
+          values[index] = prompts[key];
+          index++;
+      }
+
+    return (keys, values);
+  }
+}
+
+
+
 }
