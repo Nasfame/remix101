@@ -8,6 +8,23 @@ contract MyContract is LilypadCallerInterface {
   address public bridgeAddress; // Variable for interacting with the deployed LilypadEvents contract
   LilypadEventsUpgradeable bridge;
   uint256 public lilypadFee; //=30000000000000000;
+  mapping(uint => string) public prompts;
+
+  struct SuccessStatus {
+    address _from;
+    uint _jobId;   
+    LilypadResultType _resultType;
+    string   _result;
+  }
+
+  struct ErrorStatus{
+    address _from;
+    uint _jobId;
+    string _errorMsg;
+  }
+
+  mapping(address => SuccessStatus[]) jobRecord;
+  mapping(address => ErrorStatus[]) errorRecord;
   
   constructor(address _bridgeContractAddress) {
     bridgeAddress = _bridgeContractAddress;
@@ -39,7 +56,7 @@ contract MyContract is LilypadCallerInterface {
       // TODO: spec -> do proper json encoding, look out for quotes in _prompt
       string memory spec = string.concat(specStart, _prompt, specEnd);
       uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
-      require(id > 0, "job didn't return a value");
+      //require(id > 0, "job didn't return a value");
       prompts[id] = _prompt;
   }
 
@@ -49,11 +66,33 @@ contract MyContract is LilypadCallerInterface {
     external override {
     // Do something when the LilypadEvents contract returns    
     // results successfully
+
+      SuccessStatus memory newJob = SuccessStatus({
+             _from: _from,
+            _jobId: _jobId,
+            _resultType : _resultType,
+            _result: _result
+        });
+        jobRecord[_from].push(newJob);
+  }
+
+  function getSuccessStatus(address _owner)external view returns(SuccessStatus[] memory){
+      return jobRecord[_owner];
   }
   
   function lilypadCancelled(address _from, uint _jobId, string 
     calldata _errorMsg) external override {
     // Do something if there's an error returned by the
     // LilypadEvents contract
+     ErrorStatus memory newJob = ErrorStatus({
+         _from: _from,
+        _jobId: _jobId,
+        _errorMsg: _errorMsg
+    });
+    errorRecord[_from].push(newJob);
+  }
+
+   function getErrorStatus(address _owner)external view returns(ErrorStatus[] memory){
+      return errorRecord[_owner];
   }
 }
