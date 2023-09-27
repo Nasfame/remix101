@@ -26,9 +26,12 @@ contract ModelNFT is ERC721, ERC721URIStorage, Ownable {
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, customURI);
-        NftData[] storage data = nftRecord[msg.sender];
-        data.push(NftData({tokenId:newItemId, uri:customURI}));
-        nftRecord[msg.sender] = data;
+
+         NftData memory newNft = NftData({
+            tokenId: newItemId,
+            uri: customURI
+        });
+        nftRecord[msg.sender].push(newNft);
      
     }
 

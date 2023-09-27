@@ -15,7 +15,7 @@ contract DatasetNFT is ERC721, ERC721URIStorage, Ownable {
         string  uri;
     }
 
-    mapping (address => NftData[]) nftRecord;
+    mapping (address => NftData[])  nftRecord;
 
     constructor() ERC721("DatasetNFT", "DSN") {}
 
@@ -26,9 +26,12 @@ contract DatasetNFT is ERC721, ERC721URIStorage, Ownable {
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         _setTokenURI(newItemId, customURI);
-        NftData[] storage data = nftRecord[msg.sender];
-        data.push(NftData({tokenId:newItemId, uri:customURI}));
-        nftRecord[msg.sender] = data;
+
+         NftData memory newNft = NftData({
+            tokenId: newItemId,
+            uri: customURI
+        });
+        nftRecord[msg.sender].push(newNft);
      
     }
 
@@ -40,6 +43,11 @@ contract DatasetNFT is ERC721, ERC721URIStorage, Ownable {
 
     function getNFTS(address _owner) external view returns( NftData[] memory ){
         return nftRecord[_owner];
+        // NftData[] memory result = new NftData[](nftRecord[_owner].length);
+        // for (uint256 i = 0; i < nftRecord[_owner].length; i++) {
+        //         result[i] = nftRecord[_owner][i];
+        //     }
+        //     return result;
     }
 
     function tokenURI(uint256 tokenId)
