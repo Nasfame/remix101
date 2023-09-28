@@ -19,6 +19,9 @@ contract LilypadV2ExampleClient {
       string httpString;
   }
 
+  mapping(address => uint) public userRecord;
+  mapping(uint => string) public userCid;
+
   Result[] public results;
 
   event ReceivedJobResults(uint256 jobID, string cid);
@@ -41,8 +44,10 @@ contract LilypadV2ExampleClient {
   }
 
   function runStablediffusion(string memory prompt) public payable returns (uint256) {
-    require(msg.value == lilypadFee * 1 ether, string(abi.encodePacked("Payment of 2 Ether is required")));
-    return runModule("stable_diffusion:v0.0.1", prompt);
+     require(msg.value == lilypadFee * 1 ether, string(abi.encodePacked("Payment of 2 Ether is required")));
+    uint id =  runModule("stable_diffusion:v0.0.1", prompt);
+    userRecord[msg.sender] = id;
+    return id;
   }
 
   function runSDXL(string memory prompt) public payable returns (uint256) {
@@ -63,7 +68,7 @@ contract LilypadV2ExampleClient {
         httpString: string(abi.encodePacked("https://ipfs.io/ipfs/", _cid))
     });
     results.push(jobResult);
-
+    userCid[_jobID] = _cid;
     emit ReceivedJobResults(_jobID, _cid);
   }
 

@@ -36,20 +36,21 @@ contract StableDiffusionContract is LilypadCallerInterface {
   }
   
   //** Define the Bacalhau Specification */
-  string constant specStart = '{'
-      '"Engine": "docker",'
-      '"Verifier": "noop",'
-      '"PublisherSpec": {"Type": "estuary"},'
-      '"Docker": {'
-      '"Image": "ghcr.io/bacalhau-project/examples/stable-diffusion-gpu:0.0.1",'
-      '"Entrypoint": ["python", "main.py", "--o", "./outputs", "--p", "';
+    string constant specStart = '{'
+        '"Engine": "docker",'
+        '"Verifier": "noop",'
+        '"PublisherSpec": {"Type": "ipfs"},'
+        '"Docker": {'
+        '"Image": "ghcr.io/bacalhau-project/examples/stable-diffusion-gpu:0.0.1",'
+        '"Entrypoint": ["python", "main.py", "--o", "./outputs", "--p", "';
 
-  string constant specEnd =
-      '"]},'
-      '"Resources": {"GPU": "1"},'
-      '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
-      '"Deal": {"Concurrency": 1}'
-      '}';
+
+    string constant specEnd =
+        '"]},'
+        '"Resources": {"GPU": "1"},'
+        '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
+        '"Deal": {"Concurrency": 1}'
+        '}';
   
   event Refund(address indexed recipient, uint256 amount);
 
@@ -65,7 +66,7 @@ contract StableDiffusionContract is LilypadCallerInterface {
       // TODO: spec -> do proper json encoding, look out for quotes in _prompt
       string memory spec = string.concat(specStart, _prompt, specEnd);
       uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
-      //require(id > 0, "job didn't return a value");
+      require(id > 0, "job didn't return a value");
       prompts[id] = _prompt;
       promptArr.push(id);
   }
