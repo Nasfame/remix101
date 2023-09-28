@@ -8,7 +8,7 @@ Faucet:  <http://testnetv2.arewehotshityet.com:8080>
 Testnet details:
 
 ```
-Network name: Lilypad v2 Aurora testnet
+Network name: LilypSad v2 Aurora testnet
 New RPC URL: http://testnetv2.arewehotshityet.com:8545
 Chain ID: 1337
 Currency symbol: ETH
