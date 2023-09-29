@@ -8,7 +8,7 @@ import "./LilypadCallerInterface.sol";
 /**
     @notice An experimental contract for POC work to call Bacalhau jobs from FVM smart contracts
 */
-contract DecenterPad is LilypadCallerInterface, Ownable {
+contract Decenter is LilypadCallerInterface, Ownable {
     address public bridgeAddress;
     LilypadEventsUpgradeable bridge;
     uint256 public lilypadFee; 
