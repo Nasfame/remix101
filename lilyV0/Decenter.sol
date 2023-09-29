@@ -13,10 +13,6 @@ contract Decenter is LilypadCallerInterface, Ownable {
     LilypadEventsUpgradeable bridge;
     uint256 public lilypadFee; 
 
-    struct StableDiffusionImage {
-        string prompt;
-        string ipfsResult;
-    }
 
     struct JobProfile {
         uint jobId;
@@ -24,15 +20,11 @@ contract Decenter is LilypadCallerInterface, Ownable {
         string cid;
         bool status;
     }
-
-    StableDiffusionImage[] public images;
    
     mapping (uint => string) prompts;
     mapping (uint => JobProfile) report;
     mapping (address => uint[]) userJobIds;
     mapping(address => uint) userLatestId;
-
-    event NewImageGenerated(StableDiffusionImage image);
 
     constructor(address _bridgeContractAddress) {
         console.log("Deploying StableDiffusion contract");
@@ -56,42 +48,9 @@ contract Decenter is LilypadCallerInterface, Ownable {
         lilypadFee = fee;
     }
 
-    // not recommended
     function setLilypadFee(uint256 _fee) public onlyOwner {
         require(_fee > 0, "Lilypad fee must be greater than 0");
         lilypadFee = _fee;
-    }
-
-    string constant specStart = '{'
-        '"Engine": "docker",'
-        '"Verifier": "noop",'
-        '"PublisherSpec": {"Type": "ipfs"},'
-        '"Docker": {'
-        '"Image": "ghcr.io/bacalhau-project/examples/stable-diffusion-gpu:0.0.1",'
-        '"Entrypoint": ["python", "main.py", "--o", "./outputs", "--p", "';
-
-    string constant specEnd =
-        '"]},'
-        '"Resources": {"GPU": "1"},'
-        '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
-        '"Deal": {"Concurrency": 1}'
-        '}';
-
-    
-    
-    function StableDiffusion(string calldata _prompt) external payable  {
-        require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
-        // TODO: spec -> do proper json encoding, look out for quotes in _prompt
-        string memory spec = string.concat(specStart, _prompt, specEnd);
-        uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
-        require(id > 0, "job didn't return a value");
-        userJobIds[msg.sender].push(id);
-        prompts[id] = _prompt;
-        userLatestId[msg.sender] = id;
-    }
-
-    function allImages() public view returns (StableDiffusionImage[] memory) {
-        return images;
     }
 
     function lilypadFulfilled(address _from, uint _jobId, LilypadResultType _resultType, string calldata _result) external override {
@@ -99,18 +58,13 @@ contract Decenter is LilypadCallerInterface, Ownable {
         require(_from == address(bridge)); //really not secure
         require(_resultType == LilypadResultType.CID);
 
-        StableDiffusionImage memory image = StableDiffusionImage({
-            ipfsResult: _result,
-            prompt: prompts[_jobId]
-        });
         report[_jobId] = JobProfile({
             jobId : _jobId,
             errorMsg : "",
             cid : _result,
             status : true
         });
-        images.push(image);
-        emit NewImageGenerated(image);
+        // TODO: emit JOB
         delete prompts[_jobId];
     }
 
