@@ -31,6 +31,7 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
     mapping (uint => JobProfile) report;
     mapping (address => uint[]) userJobIds;
     mapping(address => uint) userLatestId;
+    mapping(uint => JobProfile) public cidReport;
 
     event NewImageGenerated(StableDiffusionImage image);
 
@@ -109,6 +110,13 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
             cid : _result,
             status : true
         });
+
+        cidReport[_jobId] = JobProfile({
+            jobId : _jobId,
+            errorMsg : "",
+            cid : _result,
+            status : true
+        }) ;
         images.push(image);
         emit NewImageGenerated(image);
         delete prompts[_jobId];
@@ -123,6 +131,15 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
             cid : "",
             status : false
         });
+
+         cidReport[_jobId] =JobProfile({
+            jobId : _jobId,
+            errorMsg : _errorMsg,
+            cid : "",
+            status : false
+        });
+
+
         delete prompts[_jobId];
     }
 
@@ -138,7 +155,7 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
         return result;
     }
 
-    function getUserLatestId(address _owner) view public returns(uint) {
-        return userLatestId[_owner];
+    function getUserLatestId() view public returns(uint) {
+        return userLatestId[msg.sender];
     }
 }
