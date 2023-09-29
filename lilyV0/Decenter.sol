@@ -12,6 +12,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
     address public bridgeAddress;
     LilypadEventsUpgradeable bridge;
     uint256 public lilypadFee; 
+    string constant lighthouseUrl = "https://gateway.lighthouse.storage/ipfs/";
 
 
     struct JobProfile {
@@ -110,6 +111,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
         '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
         '"Deal": {"Concurrency": 1}'
         '}';
+    string constant specClose = '}';
 
     event Refund(address indexed recipient, uint256 amount);
 
@@ -124,13 +126,22 @@ contract Decenter is LilypadCallerInterface, Ownable {
         require(bytes(train_script).length > 0, "train_script is compulsory");
 
         require(bytes(input_archive).length > 0 || bytes(input_cid).length > 0, "Either input_archive or input_cid must be provided");
-
+        
+        string memory inputSpec = "";
         // TODO: input_cid
-
-
+        if(bytes(input_cid).length>0){
+            console.log("input_cid found");
+            input_archive = input_cid;
+            string memory inputUrl = string.concat(lighthouseUrl,input_cid);
+            console.log(inputUrl);
+            // TODO: concatenate specInput
+            inputSpec = this.createInputString(input_cid);
+            console.log(inputSpec);
+        }
+        
         string memory specMiddle = string.concat('"',train_script,'"',',"',input_archive,'"');
 
-        string memory spec = string.concat(specStart,specMiddle ,specEnd);
+        string memory spec = string.concat(specStart,specMiddle ,specEnd,inputSpec,specClose);
 
         console.log(spec);
 
@@ -139,4 +150,14 @@ contract Decenter is LilypadCallerInterface, Ownable {
         require(id > 0, "job didn't return a value");
         return id;
     }
+
+    function createInputString(string calldata inputCID) public pure returns (string memory) {
+        // Create the "inputs" object as a JSON string
+        string memory inputsJson = '{"StorageSource": "IPFS","Name": "inputs","CID": "';
+
+        // Concatenate the inputCID to the JSON string
+        string memory concatenatedJson = string(abi.encodePacked(inputsJson, inputCID, '","path": "/inputs"}'));
+
+        return concatenatedJson;    
+   }
 }
