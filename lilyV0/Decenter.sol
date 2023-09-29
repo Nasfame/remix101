@@ -150,7 +150,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
         require(id > 0, "job didn't return a value");
         return id;
     }
-
+    // FIXME: change to https
     function createInputString(string calldata inputCID) public pure returns (string memory) {
         // Create the "inputs" object as a JSON string
         string memory inputsJson = '{"StorageSource": "IPFS","Name": "inputs","CID": "';
