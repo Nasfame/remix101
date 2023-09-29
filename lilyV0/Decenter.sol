@@ -27,7 +27,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
     mapping(address => uint) userLatestId;
 
     constructor(address _bridgeContractAddress) {
-        console.log("Deploying StableDiffusion contract");
+        console.log("Deploying Decenter contract");
         bridgeAddress = _bridgeContractAddress;
         bridge = LilypadEventsUpgradeable(_bridgeContractAddress);
         uint fee = bridge.getLilypadFee();
@@ -113,7 +113,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
 
     event Refund(address indexed recipient, uint256 amount);
 
-    function TrainV2(string train_script, input_archive) payable returns (uint){
+    function TrainV2(string calldata train_script, string calldata input_archive) public payable returns (uint){
         require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
         uint256 refundAmount = msg.value - lilypadFee;
         if (refundAmount > 0) {
@@ -121,9 +121,9 @@ contract Decenter is LilypadCallerInterface, Ownable {
             emit Refund(msg.sender, refundAmount);
         }
 
-        specMiddle = string.concat('"',train_script,'"',',"',input_archive,'"');
+        string memory specMiddle = string.concat('"',train_script,'"',',"',input_archive,'"');
 
-        string spec = string.concat(specStart,specMiddle ,specEnd);
+        string memory spec = string.concat(specStart,specMiddle ,specEnd);
 
         console.log(spec);
 
