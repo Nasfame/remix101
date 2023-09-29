@@ -30,6 +30,7 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
     mapping (uint => string) prompts;
     mapping (uint => JobProfile) report;
     mapping (address => uint[]) userJobIds;
+    mapping(address => uint) userLatestId;
 
     event NewImageGenerated(StableDiffusionImage image);
 
@@ -78,7 +79,7 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
 
     
     
-    function StableDiffusion(string calldata _prompt) external payable {
+    function StableDiffusion(string calldata _prompt) external payable  {
         require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
         // TODO: spec -> do proper json encoding, look out for quotes in _prompt
         string memory spec = string.concat(specStart, _prompt, specEnd);
@@ -86,6 +87,7 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
         require(id > 0, "job didn't return a value");
         userJobIds[msg.sender].push(id);
         prompts[id] = _prompt;
+        userLatestId[msg.sender] = id;
     }
 
     function allImages() public view returns (StableDiffusionImage[] memory) {
@@ -134,5 +136,9 @@ contract DecenterPad is LilypadCallerInterface, Ownable {
 
 
         return result;
+    }
+
+    function getUserLatestId(address _owner) view public returns(uint) {
+        return userLatestId[_owner];
     }
 }
