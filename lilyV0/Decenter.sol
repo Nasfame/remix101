@@ -51,24 +51,26 @@ contract StableDiffusionCallerV2 is LilypadCallerInterface, Ownable {
         lilypadFee = _fee;
     }
 
+// TODO:   --input https://gateway.lighthouse.storage/ipfs/QmRwvooN7Yfa6Gx8aVcf5cV7MAAMHmo5Q5JTt5234jf3qo  \
+
     string constant specStart = '{'
         '"Engine": "docker",'
         '"Verifier": "noop",'
         '"PublisherSpec": {"Type": "ipfs"},'
         '"Docker": {'
         '"Image": "ghcr.io/decenter-ai/compute:v1.5.0",'
-        '"Entrypoint": ["/app/venv/bin/python", "main.py", "train_v2"';
+        '"Entrypoint": ["/app/venv/bin/python", "main.py", "train_v2",';
 
     string constant specEnd =
-        '"]},'
-        '"Resources": {"GPU": "1"},'
+        ']},'
+        '"Resources": {"GPU": "0"},'
         '"Outputs": [{"Name": "outputs", "Path": "/outputs"}],'
         '"Deal": {"Concurrency": 1}'
         '}';
 
     event Refund(address indexed recipient, uint256 amount);
 
-    function TrainV2(string t, i) payable returns (uint){
+    function TrainV2(string train_script, input_archive) payable returns (uint){
         require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
         uint256 refundAmount = msg.value - lilypadFee;
         if (refundAmount > 0) {
@@ -76,9 +78,11 @@ contract StableDiffusionCallerV2 is LilypadCallerInterface, Ownable {
             emit Refund(msg.sender, refundAmount);
         }
 
-        specMiddle = string.concat();
+        specMiddle = string.concat('"',train_script,'"',',"',input_archive,'"');
 
         string spec = string.concat(specStart,specMiddle ,specEnd);
+
+        console.log(spec);
 
         // TODO: refactor the code bellow to another function called callLilypad
         uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
