@@ -23,9 +23,10 @@ contract Decenter is LilypadCallerInterface, Ownable {
     }
    
     mapping (uint => string) prompts;
-    mapping (uint => JobProfile) public report;
-    mapping (address => uint[]) public userJobIds;
+    mapping (uint => JobProfile) report;
+    mapping (address => uint[]) userJobIds;
     mapping(address => uint) userLatestId;
+    mapping(uint => JobProfile) public cidReport;
 
     constructor(address _bridgeContractAddress) {
         console.log("Deploying Decenter contract");
@@ -65,6 +66,13 @@ contract Decenter is LilypadCallerInterface, Ownable {
             cid : _result,
             status : true
         });
+
+        cidReport[_jobId] = JobProfile({
+            jobId : _jobId,
+            errorMsg : "",
+            cid : _result,
+            status : true
+        }) ;
         
         // TODO: emit JOB
         delete prompts[_jobId];
@@ -79,6 +87,14 @@ contract Decenter is LilypadCallerInterface, Ownable {
             cid : "",
             status : false
         });
+
+         cidReport[_jobId] =JobProfile({
+            jobId : _jobId,
+            errorMsg : _errorMsg,
+            cid : "",
+            status : false
+        });
+
         delete prompts[_jobId];
     }
 
@@ -147,7 +163,10 @@ contract Decenter is LilypadCallerInterface, Ownable {
 
         // TODO: refactor the code bellow to another function called callLilypad
         uint id = bridge.runLilypadJob{value: lilypadFee}(address(this), spec, uint8(LilypadResultType.CID));
+        
         require(id > 0, "job didn't return a value");
+        userJobIds[msg.sender].push(id);
+        userLatestId[msg.sender] = id;
         return id;
     }
     // FIXME: change to https
