@@ -65,6 +65,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
             cid : _result,
             status : true
         });
+        
         // TODO: emit JOB
         delete prompts[_jobId];
     }
