@@ -11,7 +11,7 @@ import "https://github.com/bacalhau-project/lilypad-v0/blob/main/hardhat/contrac
 contract DecenterPad is LilypadCallerInterface, Ownable {
     address public bridgeAddress;
     LilypadEventsUpgradeable bridge;
-    uint256 public lilypadFee; //=30000000000000000;
+    uint256 public lilypadFee; 
 
     struct StableDiffusionImage {
         string prompt;
