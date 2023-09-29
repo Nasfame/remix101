@@ -81,20 +81,19 @@ contract Decenter is LilypadCallerInterface, Ownable {
         delete prompts[_jobId];
     }
 
-    function getUserReports(address _owner) view public returns(JobProfile[] memory) {
+    function getUserReports() view public returns(JobProfile[] memory) {
+        address _owner = msg.sender;
         JobProfile[] memory result = new JobProfile[](userJobIds[_owner].length);
         uint[] memory userIds = userJobIds[_owner];
         
          for(uint i; i < userIds.length; i++){
             result[i] = report[userIds[i]];
          }
-
-
         return result;
     }
 
-    function getUserLatestId(address _owner) view public returns(uint) {
-        return userLatestId[_owner];
+    function getUserLatestJobId() view public returns (uint) {
+        return userLatestId[msg.sender];
     }
 
     string constant specStart = '{'
@@ -160,7 +159,5 @@ contract Decenter is LilypadCallerInterface, Ownable {
 
         return concatenatedJson;    
    }
-   function getUserLatestJobId() view public returns (uint) {
-    return userLatestId[msg.sender];
-   }
+
 }
