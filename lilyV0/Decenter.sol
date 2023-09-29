@@ -23,8 +23,8 @@ contract Decenter is LilypadCallerInterface, Ownable {
     }
    
     mapping (uint => string) prompts;
-    mapping (uint => JobProfile) report;
-    mapping (address => uint[]) userJobIds;
+    mapping (uint => JobProfile) public report;
+    mapping (address => uint[]) public userJobIds;
     mapping(address => uint) userLatestId;
 
     constructor(address _bridgeContractAddress) {
@@ -159,5 +159,8 @@ contract Decenter is LilypadCallerInterface, Ownable {
         string memory concatenatedJson = string(abi.encodePacked(inputsJson, inputCID, '","path": "/inputs"}'));
 
         return concatenatedJson;    
+   }
+   function getUserLatestJobId() view public returns (uint) {
+    return userLatestId[msg.sender];
    }
 }
