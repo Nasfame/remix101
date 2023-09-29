@@ -27,3 +27,11 @@ Value: 30000000000000000 WEI or spend more with 1ETH
 ### Lilypad network
 
 #TODO:
+
+
+### Contract Sample
+
+train_script: headbrain.ipynb
+input_archive: /app/samples/kaggle/inputs/headbrain.zip
+
+
