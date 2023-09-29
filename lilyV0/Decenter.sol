@@ -113,13 +113,20 @@ contract Decenter is LilypadCallerInterface, Ownable {
 
     event Refund(address indexed recipient, uint256 amount);
 
-    function TrainV2(string calldata train_script, string calldata input_archive) public payable returns (uint){
+    function TrainV2(string calldata train_script, string calldata input_archive, string calldata input_cid) public payable returns (uint){
         require(msg.value >= lilypadFee, "Not enough to run Lilypad job");
         uint256 refundAmount = msg.value - lilypadFee;
         if (refundAmount > 0) {
             payable(msg.sender).transfer(refundAmount);
             emit Refund(msg.sender, refundAmount);
         }
+
+        require(bytes(train_script).length > 0, "train_script is compulsory");
+
+        require(bytes(input_archive).length > 0 || bytes(input_cid).length > 0, "Either input_archive or input_cid must be provided");
+
+        // TODO: input_cid
+
 
         string memory specMiddle = string.concat('"',train_script,'"',',"',input_archive,'"');
 
