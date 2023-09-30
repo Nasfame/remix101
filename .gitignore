@@ -1,2 +1,8 @@
 artifacts/
 .deps/
+.idea/
+.vscode/
+.DS_Store
+venv/
+node_modules/
+.venv/
