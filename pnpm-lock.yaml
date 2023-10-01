@@ -4,12 +4,21 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  '@openzeppelin/contracts':
+    specifier: ^4.9.3
+    version: 4.9.3
+
 devDependencies:
   '@remix-project/remixd':
     specifier: ^0.6.18
     version: 0.6.18
 
 packages:
+
+  /@openzeppelin/contracts@4.9.3:
+    resolution: {integrity: sha512-He3LieZ1pP2TNt5JbkPA4PNT9WC3gOTOlDcFGJW4Le4QKqwmiNJCRt44APfxMxvq7OugU/cqYuPcSBzOw38DAg==}
+    dev: false
 
   /@remix-project/remixd@0.6.18:
     resolution: {integrity: sha512-7wvRdOMukKhbUmsDJ4AL6Frx2J9/cBsoKMP5sVUNAn4huO/UXy/cr3lwKxeoBOYxXK+V6cgSeorfLHj0pEYZkw==}
