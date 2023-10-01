@@ -144,7 +144,7 @@ contract Decenter is LilypadCallerInterface, Ownable {
         require(bytes(input_archive).length > 0 || bytes(input_cid).length > 0, "Either input_archive or input_cid must be provided");
         
         string memory inputSpec = "";
-        // TODO: input_cid
+
         if(bytes(input_cid).length>0){
             console.log("input_cid found");
             input_archive = input_cid;
