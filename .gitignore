@@ -6,3 +6,4 @@ artifacts/
 venv/
 node_modules/
 .venv/
+cache/
