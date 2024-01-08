@@ -49,8 +49,9 @@ contract PFG {
         
         Strategy memory pos = getPositions(_id);
         
-        ufixed closeAmt = amt * pos.SHORT;
-        ufixed longAmt = amt* pos.LONG;
+        ufixed ufixedAmount = ufixed(amt) / ufixed(1 ether);
+        
+        ufixed closeShortAmt = pos.lev* pos.SHORT ;
         
         // CLOSE MARKET POS 
 
