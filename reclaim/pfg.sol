@@ -9,8 +9,19 @@ contract PFG {
         ufixed lev;
     }
 
+    struct User {
+        uint256 id;
+        address a;
+        Strategy s;
+        // subaccount
+    }
+
+
     ufixed immutable maxLev = 50; 
     ufixed immutable minLev = 1.1; 
+    
+    mapping(addr)
+    
 
     constructor(){
 
