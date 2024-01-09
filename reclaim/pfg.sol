@@ -5,6 +5,7 @@ contract PFG {
     struct Strategy {
         ufixed LONG; // Eg: 0.01 for 1%
         ufixed SHORT; 
+        // ufixed maintenance; not necessary
         ufixed lev;
     }
 
@@ -18,7 +19,7 @@ contract PFG {
     modifier validStrategy (Strategy memory _s) {
         require((_s.LONG>=0) && (_s.LONG<=1), "Invalid LONG");
         require((_s.SHORT>=0) && (_s.SHORT<=1), "Invalid SHORT");
-        require(_s.LONG + _s.SHORT == 1, "Invalid LONG SHORT configuration");
+        require(_s.LONG + _s.SHORT <= 1, "Invalid LONG SHORT configuration");
         
         ufixed lev = _s.lev;
         require((lev>=minLev) && (lev<=maxLev), "Invalid Leverage");
